@@ -2,23 +2,17 @@
 
 ## Airbnb Pricing Dataset
 
----
-
 - Contains information on 3,982 Airbnb listings from a major metropolitan area.
 - Each row represents a unique listing with a combination of property, host, and pricing attributes.
 - The dataset supports analysis of factors that influence nightly pricing and exploration of natural groupings of listings.
 
 ## Business Objectives
 
----
-
-- Contains information on 3,982 Airbnb listings from a major metropolitan area.
-- Each row represents a unique listing with a combination of property, host, and pricing attributes.
-- The dataset supports analysis of factors that influence nightly pricing and exploration of natural groupings of listings.
+- Understand the key drivers of nightly pricing for Airbnb listings.
+- Identify natural groupings (clusters) of listings that align with consumer market segments (e.g., budget, family, luxury).
+- Deliver actionable insights that could be used by hosts, platform operators, or consumers.
 
 ## Data Dictionary
-
----
 
 | Variable Name       | Data Type | Description                                      |
 | ------------------- | --------- | ------------------------------------------------ |
