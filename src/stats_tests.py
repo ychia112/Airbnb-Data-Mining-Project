@@ -19,4 +19,4 @@ def plot_group_distributions(df, column):
     plt.title(f'Nightly Rate by {column}')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.close()
+    plt.show()
