@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import numpy as np
 
 # Discribe the structure of the dataset:
 def summarize(df):
@@ -32,11 +33,20 @@ def get_variable_types(df, target=None, id_column=None, cat_threshold=0):
 
 # Visualize and summarize key variables:
     
-def plot_distributions(df, num＿cols):
+def plot_distributions(df, num_cols):
     for col in num_cols:
         plt.figure()
-        sns.histplot(df[col], kde=True)
+
+        unique_vals = df[col].dropna().unique()
+        if np.issubdtype(df[col].dtype, np.integer) and len(unique_vals) < 10: # check if the column is integer
+            # ordinal measure
+            sns.countplot(x=col, data=df)
+        else:
+            # continuous
+            sns.histplot(df[col], kde=True)
+
         plt.title(f'Distribution of {col}')
+        plt.tight_layout()
         plt.show()
         
 def plot_correlations(df):
