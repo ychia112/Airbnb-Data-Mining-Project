@@ -14,11 +14,9 @@ def missing_check(df):
 
 # data type classification
 
-def get_variable_types(df, target=None, id_column=None, cat_threshold=0):
+def get_variable_types(df, target=None, cat_threshold=0):
     if target:
         df = df.drop(columns=[target])
-    if id_column:
-        df = df.drop(columns=id_column)
     
     num_cols = df.select_dtypes(include=['int64', 'float64']).columns.tolist()
     cat_cols = df.select_dtypes(include=["object", "category", "bool"]).columns.tolist()
@@ -68,12 +66,64 @@ def plot_boxplots(df, cat_cols, target):
     
 # Outliers, skew, or transformations:
 
+def drop_outliers_iqr(df, columns, multiplier=1.5):
+    """
+    Drop rows containing outliers based on IQR method for specified columns.
+
+    Parameters:
+        df: The dataframe to process.
+        columns: List of column names to check for outliers.
+        multiplier: The IQR multiplier (default = 1.5).
+    """
+    df_cleaned = df.copy()
+    initial_shape = df_cleaned.shape
+
+    for col in columns:
+        Q1 = df_cleaned[col].quantile(0.25)
+        Q3 = df_cleaned[col].quantile(0.75)
+        IQR = Q3 - Q1
+        lower = Q1 - multiplier * IQR
+        upper = Q3 + multiplier * IQR
+        df_cleaned = df_cleaned[(df_cleaned[col] >= lower) & (df_cleaned[col] <= upper)]
+
+    final_shape = df_cleaned.shape
+    dropped = initial_shape[0] - final_shape[0]
+    print(f"Dropped {dropped} rows due to outliers in {columns}.")
+
+    return df_cleaned
+
+
 def skew_check(df, num_cols):
     skew_d = df[num_cols].skew()
     return skew_d
 
 
+def one_hot_encode(df, cat_cols, drop_first=True):
+    """
+    Perform One-Hot Encoding on categorical columns.
 
+    Parameters:
+    - df: pandas DataFrame
+    - cat_cols: list of categorical column names
+    - drop_first: bool, whether to drop the first level to avoid multicollinearity (default: True)
+
+    Returns:
+    - encoded_df: DataFrame with one-hot encoded columns
+    """
+    encoded_df = pd.get_dummies(df, columns=cat_cols, drop_first=drop_first)
+    return encoded_df
+
+
+# VIF
+
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+def calculate_vif(df, features):
+    X = df[features].dropna().copy() 
+    vif_data = pd.DataFrame()
+    vif_data["feature"] = X.columns
+    vif_data["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+    return vif_data.sort_values(by="VIF", ascending=False)
 
 
 
