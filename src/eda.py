@@ -98,7 +98,7 @@ def skew_check(df, num_cols):
     return skew_d
 
 
-def one_hot_encode(df, cat_cols, drop_first=True):
+def one_hot_encode(df, cat_cols, drop_first=True, dtype=bool):
     """
     Perform One-Hot Encoding on categorical columns.
 
@@ -110,7 +110,7 @@ def one_hot_encode(df, cat_cols, drop_first=True):
     Returns:
     - encoded_df: DataFrame with one-hot encoded columns
     """
-    encoded_df = pd.get_dummies(df, columns=cat_cols, drop_first=drop_first)
+    encoded_df = pd.get_dummies(df, columns=cat_cols, drop_first=drop_first, dtype=dtype)
     return encoded_df
 
 
