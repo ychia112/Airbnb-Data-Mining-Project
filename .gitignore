@@ -1,0 +1,43 @@
+# ========== Data ==========
+# Ignore raw and processed data files
+data/
+!data/.gitkeep  # Keep the folder in version control, but not its contents
+
+# ========== Notebooks ==========
+.ipynb_checkpoints/
+
+# ========== Python =============
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ========== Environment Files ==========
+.env
+*.env
+
+# ========== Virtual Environments ==========
+.venv/
+venv/
+
+# ========== Logs and Outputs ==========
+*.log
+*.out
+
+# ========== OS Files ==========
+.DS_Store
+Thumbs.db
+
+# ========== Model Files ==========
+*.h5
+*.pkl
+*.pt
+*.joblib
+
+# ========== IDE Specific ==========
+.vscode/
+.idea/
+
+# ========== Temporary Files ==========
+*.bak
+*.tmp
+*.swp
